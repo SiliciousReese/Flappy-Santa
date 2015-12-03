@@ -21,9 +21,9 @@ public class NorthPole {
 	/** Height in pixels of santa. */
 	private static final int SANTA_HEIGHT = 70;
 
-	private static final double GRAVTY = 0.002;
+	private static final double GRAVTY = 0.013;
 	/** Change in motion after each jump. */
-	private static final double MAXIMAL_VELOCITY = -0.7;
+	private static final double MAXIMAL_VELOCITY = -1.3;
 
 	private static final int X_LOCATION = 30;
 
@@ -31,10 +31,10 @@ public class NorthPole {
 	/* TODO Only works with one chimneys currently. */
 	private static final int MAX_CHIMNEYS = 1;
 
-	/* Constant rate at which calculations are updated. */
-	private static final long PHYSICS_TIMER_PERIOD = 1;
-
-	// private static final StreamManager STREAMS = StreamManager.getInstance();
+	/* Constant rate at which calculations are updated. The physics calculations
+	 * must be able to be done in under this amount of time (milliseconds) or
+	 * the program may start to lag. */
+	private static final long PHYSICS_TIMER_PERIOD = 6;
 
 	public static int getNorthPoleHeight() {
 		return NORTH_POLE_HEIGHT;
@@ -59,6 +59,8 @@ public class NorthPole {
 	/** Determines whether santa or the chimneys should move. */
 	private boolean gameOver;
 
+	private boolean showHitbox;
+
 	/** Slightly bloated object that controls almost everything related to the
 	 * game engine. */
 	public NorthPole() {
@@ -73,6 +75,8 @@ public class NorthPole {
 		/* TODO Make santa flap like a rain-deer by using a changing sprite. */
 		santaBirdImage = StreamManager.getUpSanta();
 
+		showHitbox = false;
+
 		setTimer();
 	}
 
@@ -85,11 +89,18 @@ public class NorthPole {
 			 * be changed to make more sense. */
 			Graphics2D gTmp = (Graphics2D) g;
 			g.drawImage(santaBirdImage, X_LOCATION, (int) yPosition, null);
+
+			/* Show the hit box. This sysntax is a valid, if confusing way to
+			 * temporarly alternate between showing and not showing the hitbox. */
+			if (showHitbox = !showHitbox)
+				g.fillRect(X_LOCATION, (int) yPosition, SANTA_HEIGHT,
+						SANTA_HEIGHT);
+
 			for (Chimneys p : chimneys)
 				p.draw(gTmp);
 		} else {
 			/* Draw fail to the screen. */
-			g.setColor(Color.black);
+			g.setColor(Color.RED);
 			g.setFont(new Font(Font.SERIF, Font.CENTER_BASELINE, 50));
 			g.drawString("FAIL", 100, 100);
 		}
@@ -155,7 +166,7 @@ public class NorthPole {
 					/* TODO Does this need thread safety? */
 					synchronized (p) {
 						p.moveLeft();
-						if (p.isOffScreen())
+						if (!p.isVisible())
 							p.reset();
 					}
 
@@ -169,7 +180,7 @@ public class NorthPole {
 
 		/* If the rate is not fixed, the physics calculations may not work as
 		 * expected. A result of this is that the physics calculations MUST
-		 * finish within the time given or weird things may happen. */
+		 * complete within the time given. */
 		physicsUpdates.scheduleAtFixedRate(doPhysics, 0, PHYSICS_TIMER_PERIOD);
 	}
 }

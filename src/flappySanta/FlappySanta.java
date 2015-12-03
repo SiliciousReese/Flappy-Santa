@@ -5,7 +5,7 @@ import flappySanta.userInterface.SwingManager;
 /** A clone of flappy bird.
  * 
  * @author Daniel Darnell
- * @version 1.0.1-beta */
+ * @version 1.1.0-beta */
 public class FlappySanta {
 	/** Non-zero exit status is standard for representing error. */
 	private static final int DEFAULT_ERROR_CODE = 1;

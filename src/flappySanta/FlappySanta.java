@@ -5,24 +5,30 @@ import flappySanta.userInterface.SwingManager;
 /** A clone of flappy bird.
  * 
  * @author Daniel Darnell
- * @version 1.0.0-beta */
+ * @version 1.0.1-beta */
 public class FlappySanta {
-	private static final int ERROR_CODE = 1;
+	/** Non-zero exit status is standard for representing error. */
+	private static final int DEFAULT_ERROR_CODE = 1;
 
+	/** Entrance to program. */
 	public static void main(String[] args) {
-		SwingManager.getInstance();
+		/* Start swing, which will load all the other pieces of the code itself. */
+		SwingManager.startSwing();
 	}
 
+	/** Only exit point for the code except for errors. */
 	public static void exit(boolean error) {
+		/* TODO Allow method to receive different error messages. */
 		/* Status code of 0 is standard exit code. */
-		int status = 0;
+		int status;
 
 		if (error) {
 			System.err.println("Exiting with error.");
-			status = ERROR_CODE;
-		}
+			status = DEFAULT_ERROR_CODE;
+		} else
+			status = 0;
 
-		/* Will run any shutdown hooks. */
+		/* Will run any shutdown hooks, specifically those for closing streams. */
 		System.exit(status);
 	}
 

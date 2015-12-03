@@ -10,26 +10,26 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import flappySanta.northPolePhysics.PhysicsManager;
+import flappySanta.northPoleMechanics.ElvishLiaison;
 
 @SuppressWarnings("serial")
 public class SantaContentPane extends JPanel implements KeyListener {
+	/** Delay between repainting screen. */
 	private static final int REFRESH_DELAY = 10;
-	private PhysicsManager physics;
+
+	private static final ElvishLiaison MECHANICS = ElvishLiaison.getInstance();
 
 	private Timer refreshDisplay;
 
 	/** Content pane for santa frame. */
 	public SantaContentPane() {
-		physics = PhysicsManager.getInstance();
-
 		setRepaintTimer();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyChar() == ' ')
-			physics.jump();
+			MECHANICS.jump();
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class SantaContentPane extends JPanel implements KeyListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		Toolkit.getDefaultToolkit().sync();
-		physics.drawWorld(g);
+		MECHANICS.drawNorthPole(g);
 	}
 
 	/** Creates and starts a timer that refreshes the display. */

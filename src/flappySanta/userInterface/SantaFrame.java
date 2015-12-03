@@ -8,34 +8,39 @@ import javax.swing.WindowConstants;
 
 import flappySanta.FlappySanta;
 
-public class SantaFrame implements WindowListener {
-	private JFrame frame;
-
+/* TODO Serialize? */
+@SuppressWarnings("serial")
+public class SantaFrame extends JFrame implements WindowListener {
 	private SantaContentPane contentPane;
 	private SantaMenu menu;
 
 	/** The frame that is behind most of the program's gui. */
 	public SantaFrame() {
-		/* Create a new frame with the title "Flappy Santa", allow it to handle
-		 * being closed, set the size and prevent resizing. */
-		frame = new JFrame("Flappy Santa");
-		frame.addWindowListener(this);
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setSize(800, 600);
+		/* Set title to "Flappy Santa", allow this to handle being closed, set
+		 * the size and prevent resizing. */
+		/* TODO Move some of this to Swing manager which owns this. */
+		super("Flappy Santa");
+		addWindowListener(this);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setResizable(false);
+		setSize(800, 600);
 
 		contentPane = new SantaContentPane();
-		frame.setContentPane(contentPane);
-		frame.addKeyListener(contentPane);
+		setContentPane(contentPane);
+		addKeyListener(contentPane);
 
 		menu = new SantaMenu();
-		frame.setJMenuBar(menu);
+		setJMenuBar(menu);
 
-		new NewGameDialog(frame);
+		/* Start the new Game dialog. */
+		/* TODO This should not be made visible until the dialog has closed. */
+		new NewGameDialog(this);
 
-		frame.setVisible(true);
+		setVisible(true);
 	}
 
+	/* TODO Consider using a method for closing window without the need to
+	 * implement window listener with all its unused methods. */
 	@Override
 	public void windowClosed(WindowEvent e) {
 		/* Exit cleanly. */

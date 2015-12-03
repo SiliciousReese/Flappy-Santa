@@ -1,6 +1,5 @@
 package flappySanta.userInterface;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,10 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import flappySanta.FlappySanta;
-import flappySanta.northPolePhysics.PhysicsManager;
+import flappySanta.northPoleMechanics.ElvishLiaison;
 
 @SuppressWarnings("serial")
 public class NewGameDialog extends JDialog implements ActionListener {
+	private static final ElvishLiaison MECHANICS = ElvishLiaison.getInstance();
+
 	private JTextArea text;
 
 	private JButton exit;
@@ -40,8 +41,7 @@ public class NewGameDialog extends JDialog implements ActionListener {
 		newGame.addActionListener(this);
 		buttonPanel.add(newGame);
 
-		setMinimumSize(new Dimension(100, 100));
-
+		/* Tidy up. */
 		getContentPane().add(buttonPanel);
 		pack();
 		setVisible(true);
@@ -54,6 +54,6 @@ public class NewGameDialog extends JDialog implements ActionListener {
 		if (e.getActionCommand().equals("exit"))
 			FlappySanta.exit(false);
 		else if (e.getActionCommand().equals("new"))
-			PhysicsManager.getInstance().noahsFlood();
+			MECHANICS.noahsFlood();
 	}
 }

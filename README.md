@@ -3,7 +3,7 @@ A program based on flappy bird. The game over message starts
 before the game, just press the new game button. Press space
 to jump. The game does not currently keep track of score.
 
-Running:
+# Running
 A runnable jar is located in the build directory, so from
 this directory just execute that jar. This can be done in
 a command prompt by executing this command from the 

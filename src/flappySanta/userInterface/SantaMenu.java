@@ -31,7 +31,7 @@ public class SantaMenu extends JMenuBar implements ActionListener {
 		restart = new JMenuItem("Restart");
 		restart.setActionCommand("restart");
 		restart.addActionListener(this);
-		main.add(exit);
+		main.add(restart);
 
 		add(main);
 	}

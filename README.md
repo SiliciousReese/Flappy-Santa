@@ -3,8 +3,16 @@ A program based on flappy bird. The game over message starts
 before the game, just press the new game button. Press space
 to jump. The game does not currently keep track of score.
 
-Compiling:
-There should already be up-to-date class files and a possibly 
-out-of-date zip folder with a runnable jar in the bin folder.
-For now, if you want to compile from source google how to do
-it. Eventually I will create an ant build. 
+Running:
+A runnable jar is located in the build directory, so from
+this directory just execute that jar. This can be done in
+a command prompt by executing this command from the 
+Flappy-Santa directory.
+
+java -jar build/Flappy-Santa-beta.jar
+
+Eventually, I will create a build file to make compiling
+from source easy, but until then the only way is to 
+recompile each .java file in the src directory and run the
+flappySanta.FlappySanta class from a directory that has
+the res folder and its contents.

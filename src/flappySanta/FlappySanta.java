@@ -1,4 +1,4 @@
-package flappySanta;
+	 package flappySanta;
 
 import flappySanta.userInterface.SwingManager;
 
